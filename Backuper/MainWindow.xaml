@@ -7,6 +7,8 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
     <Grid>
-        
+        <Button x:Name="ShowFolderDialogButton" Content="Choose folder" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="120" Height="30" Click="ShowFolderDialogButton_Click"/>
+        <TextBox x:Name="ChosenFolderTextBox" HorizontalAlignment="Left" Height="23" Margin="10,45,0,0" TextWrapping="Wrap" Text="Chosen folder..." VerticalAlignment="Top" Width="497" IsEnabled="False"/>
+
     </Grid>
 </Window>
