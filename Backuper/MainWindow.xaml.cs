@@ -1,19 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Forms;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.IO;
 using System.IO.Compression;
 
 namespace Backuper
@@ -24,7 +11,6 @@ namespace Backuper
     public partial class MainWindow : Window
     {
         private FolderBrowserDialog folderBrowserDialog1;
-
         private string folderName;
 
         public MainWindow()
@@ -34,7 +20,7 @@ namespace Backuper
             this.folderBrowserDialog1 = new FolderBrowserDialog();
             this.folderBrowserDialog1.Description = "Select the directory that you want to use as the default.";
             this.folderBrowserDialog1.ShowNewFolderButton = false;
-            this.folderBrowserDialog1.RootFolder = Environment.SpecialFolder.Personal;
+            this.folderBrowserDialog1.RootFolder = Environment.SpecialFolder.MyComputer;
         }
 
         public void CreateZipDirectory()
