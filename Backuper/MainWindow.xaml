@@ -5,10 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Backuper"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="Backuper" Height="130.02" Width="398.494">
     <Grid>
-        <Button x:Name="ShowFolderDialogButton" Content="Choose folder" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="120" Height="30" Click="ShowFolderDialogButton_Click"/>
-        <TextBox x:Name="ChosenFolderTextBox" HorizontalAlignment="Left" Height="23" Margin="10,45,0,0" TextWrapping="Wrap" Text="Chosen folder..." VerticalAlignment="Top" Width="497" IsEnabled="False"/>
+        <Button x:Name="PickBaseDirectoryButton" Content="Välj basmapp" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="120" Height="30" Click="PickDirectoryButton_Click" Tag="base"/>
+        <TextBlock x:Name="StatusTitle" HorizontalAlignment="Left" Margin="10,81,0,0" TextWrapping="Wrap" Text="Status:" VerticalAlignment="Top" Width="61" FontWeight="Bold"/>
+        <TextBlock x:Name="BaseDirectoryTitle" HorizontalAlignment="Left" Margin="10,45,0,0" TextWrapping="Wrap" Text="Basmapp:" VerticalAlignment="Top" Width="61" FontWeight="Bold"/>
+        <TextBlock x:Name="TargetDirectoryTitle" HorizontalAlignment="Left" Margin="10,63,0,0" TextWrapping="Wrap" Text="Målmapp:" VerticalAlignment="Top" Width="61" FontWeight="Bold"/>
+        <TextBlock x:Name="BaseDirectoryString" HorizontalAlignment="Left" Margin="76,45,0,0" TextWrapping="Wrap" Text="Välj en mapp..." VerticalAlignment="Top" Width="304" Grid.ColumnSpan="2"/>
+        <TextBlock x:Name="TargetDirectoryString" HorizontalAlignment="Left" Margin="76,63,0,0" TextWrapping="Wrap" Text="Välj en mapp..." VerticalAlignment="Top" Width="304" Grid.ColumnSpan="2"/>
+        <TextBlock x:Name="StatusString" HorizontalAlignment="Left" Margin="76,81,0,0" TextWrapping="Wrap" Text="Väntar på användare..." VerticalAlignment="Top" Width="304" Grid.ColumnSpan="2"/>
+        <Button x:Name="PickTargetDirectoryButton" Content="Välj målmapp" HorizontalAlignment="Left" Margin="135,10,0,0" VerticalAlignment="Top" Width="120" Height="30" Click="PickDirectoryButton_Click" Tag="target" Grid.ColumnSpan="2"/>
+        <Button x:Name="CreateZipButton" Content="Skapa Zip-fil" HorizontalAlignment="Left" Margin="260,10,0,0" VerticalAlignment="Top" Width="120" Height="30" Click="CreateZipButton_Click"/>
 
     </Grid>
 </Window>
