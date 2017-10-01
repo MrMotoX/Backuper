@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Backuper"
         mc:Ignorable="d"
-        Title="Backuper" Height="130.02" Width="398.494">
+        Title="Backuper" Height="144.02" Width="398.494">
     <Grid>
         <Button x:Name="PickBaseDirectoryButton" Content="Välj basmapp" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="120" Height="30" Click="PickDirectoryButton_Click" Tag="base"/>
         <TextBlock x:Name="StatusTitle" HorizontalAlignment="Left" Margin="10,81,0,0" TextWrapping="Wrap" Text="Status:" VerticalAlignment="Top" Width="61" FontWeight="Bold"/>

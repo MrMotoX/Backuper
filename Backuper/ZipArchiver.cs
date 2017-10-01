@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.IO.Compression;
 
 namespace Backuper
@@ -20,8 +21,16 @@ namespace Backuper
 
         public static void CreateBackup()
         {
-            string fileName = Path.GetDirectoryName(targetDirectory) + ".zip";
-            ZipFile.CreateFromDirectory(baseDirectory, @"C:\Installation\Siemens\gsd.zip");
+            string targetFile = GetTargetFilePath();
+            ZipFile.CreateFromDirectory(baseDirectory, targetFile);
+        }
+
+        private static string GetTargetFilePath()
+        {
+            Directory.SetCurrentDirectory(targetDirectory);
+            string baseDirectoryName = Path.GetDirectoryName(baseDirectory);
+            string filePath = Path.GetDirectoryName(baseDirectory) + @".zip";
+            return filePath;
         }
     }
 }
