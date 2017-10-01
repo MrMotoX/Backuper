@@ -27,10 +27,8 @@ namespace Backuper
 
         private static string GetTargetFilePath()
         {
-            Directory.SetCurrentDirectory(targetDirectory);
-            string baseDirectoryName = Path.GetDirectoryName(baseDirectory);
-            string filePath = Path.GetDirectoryName(baseDirectory) + @".zip";
-            return filePath;
+            string baseDirectoryName = new DirectoryInfo(baseDirectory).Name;
+            return targetDirectory + @"\" + baseDirectoryName + @".zip";
         }
     }
 }
