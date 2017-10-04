@@ -11,24 +11,29 @@ namespace Backuper
     public partial class MainWindow : Window
     {
         private FolderBrowserDialog folderBrowserDialog1;
-
+        
         public MainWindow()
         {
             InitializeComponent();
+
+            ZipArchiver.OnDirectoryUpdated += ZipArchiver_BaseDirectoryUpdated;
+            ZipArchiver.LoadConfig();
 
             this.folderBrowserDialog1 = new FolderBrowserDialog()
             {
                 ShowNewFolderButton = true,
                 RootFolder = Environment.SpecialFolder.MyComputer
             };
-
-            ZipArchiver.BaseDirectoryUpdated += ZipArchiver_BaseDirectoryUpdated;
         }
 
-        private void ZipArchiver_BaseDirectoryUpdated(object sender, EventArgs e)
+        private void ZipArchiver_BaseDirectoryUpdated(object sender, DirectoryUpdatedEventArgs e)
         {
-            BaseDirectoryString.Text = ZipArchiver.GetBaseDirectory();
-            StatusString.Text = "Basmapp vald";
+            if (e.Directory == "Base")
+            {
+                ConfigXml.SaveToFieldInFile("BaseDirectory", e.Path);
+                BaseDirectoryString.Text = e.Path;
+                StatusString.Text = "Basmapp vald";
+            }
         }
 
         private void PickDirectoryButton_Click(object sender, RoutedEventArgs e)
@@ -37,6 +42,7 @@ namespace Backuper
             if (tag == "base")
             {
                 folderBrowserDialog1.Description = "Välj den mapp du vill komprimera.";
+                folderBrowserDialog1.SelectedPath = GetBaseDirectoryPath();
             }
             else if (tag == "target")
             {
@@ -67,6 +73,16 @@ namespace Backuper
                     }
                 }
             }
+        }
+
+        private string GetBaseDirectoryPath()
+        {
+            string directoryPath = ConfigXml.GetField("BaseDirectory");
+            if (directoryPath == "")
+            {
+                directoryPath = ZipArchiver.GetBaseDirectory();
+            }
+            return directoryPath;
         }
 
         private void CreateZipButton_Click(object sender, RoutedEventArgs e)

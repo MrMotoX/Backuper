@@ -9,10 +9,24 @@ namespace Backuper
         private static string baseDirectory;
         private static string targetDirectory;
 
+        public static void LoadConfig()
+        {
+            ConfigXml.LoadFromFile();
+
+            if (ConfigXml.GetField("BaseDirectory") != "")
+            {
+                SetBaseDirectory(ConfigXml.GetField("BaseDirectory"));
+            }
+            if (ConfigXml.GetField("TargetDirectory") != "")
+            {
+                SetTargetDirectory(ConfigXml.GetField("TargetDirectory"));
+            }
+        }
+
         public static void SetBaseDirectory(string folder)
         {
             baseDirectory = folder;
-            OnBaseDirectoryUpdated(EventArgs.Empty);
+            OnDirectoryUpdated?.Invoke(null, new DirectoryUpdatedEventArgs("Base", folder));
         }
 
         public static string GetBaseDirectory()
@@ -23,6 +37,7 @@ namespace Backuper
         public static void SetTargetDirectory(string folder)
         {
             targetDirectory = folder;
+            OnDirectoryUpdated?.Invoke(null, new DirectoryUpdatedEventArgs("Target", folder));
         }
 
         public static void CreateBackup()
@@ -36,11 +51,23 @@ namespace Backuper
             return targetDirectory + @"\" + baseDirectoryName + @".zip";
         }
 
-        public static event EventHandler BaseDirectoryUpdated;
+        public static event EventHandler<DirectoryUpdatedEventArgs> OnDirectoryUpdated;
 
-        private static void OnBaseDirectoryUpdated(EventArgs e)
+        //private static void OnDirectoryUpdated(DirectoryUpdatedEventArgs e)
+        //{
+        //    BaseDirectoryUpdated?.Invoke(null, e);
+        //}
+    }
+
+    public class DirectoryUpdatedEventArgs : EventArgs
+    {
+        public string Directory;
+        public string Path;
+
+        public DirectoryUpdatedEventArgs(string directory, string path)
         {
-            BaseDirectoryUpdated?.Invoke(null, e);
+            Directory = directory;
+            Path = path;
         }
     }
 }
