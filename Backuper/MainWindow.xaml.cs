@@ -21,6 +21,14 @@ namespace Backuper
                 ShowNewFolderButton = true,
                 RootFolder = Environment.SpecialFolder.MyComputer
             };
+
+            ZipArchiver.BaseDirectoryUpdated += ZipArchiver_BaseDirectoryUpdated;
+        }
+
+        private void ZipArchiver_BaseDirectoryUpdated(object sender, EventArgs e)
+        {
+            BaseDirectoryString.Text = ZipArchiver.GetBaseDirectory();
+            StatusString.Text = "Basmapp vald";
         }
 
         private void PickDirectoryButton_Click(object sender, RoutedEventArgs e)
@@ -42,8 +50,8 @@ namespace Backuper
                 if (tag == "base")
                 {
                     ZipArchiver.SetBaseDirectory(folderBrowserDialog1.SelectedPath);
-                    BaseDirectoryString.Text = folderBrowserDialog1.SelectedPath;
-                    StatusString.Text = "Basmapp vald";
+                    //BaseDirectoryString.Text = folderBrowserDialog1.SelectedPath;
+                    //StatusString.Text = "Basmapp vald";
                 }
                 else if (tag == "target")
                 {
