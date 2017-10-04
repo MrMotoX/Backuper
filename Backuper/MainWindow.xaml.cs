@@ -48,26 +48,55 @@ namespace Backuper
                 else if (tag == "target")
                 {
                     ZipArchiver.SetTargetDirectory(folderBrowserDialog1.SelectedPath);
-                    TargetDirectoryString.Text = folderBrowserDialog1.SelectedPath;
-                    StatusString.Text = "Målmapp vald";
+                    try
+                    {
+                        TargetDirectoryString.Text = ZipArchiver.GetTargetFileName();
+                        StatusString.Text = "Målmapp vald";
+                    }
+                    catch (ArgumentNullException)
+                    {
+                        UpdateStatusPickFolder();
+                    }
                 }
             }
         }
 
         private void CreateZipButton_Click(object sender, RoutedEventArgs e)
         {
+            UpdateStatusCreatingArchive();
             try
             {
                 ZipArchiver.CreateBackup();
+                UpdateStatusArchiveCreated();
             }
             catch (ArgumentNullException)
             {
-                StatusString.Text = "Du måste välja en bas- och en målmapp";
+                UpdateStatusPickFolder();
             }
             catch (DirectoryNotFoundException)
             {
-                StatusString.Text = "Du har valt en mapp som inte finns";
+                UpdateStatusNonExistingFolder();
             }
+        }
+
+        private void UpdateStatusCreatingArchive()
+        {
+            StatusString.Text = "Skapar zip-fil";
+        }
+
+        private void UpdateStatusArchiveCreated()
+        {
+            StatusString.Text = "Zip-fil skapades";
+        }
+
+        private void UpdateStatusPickFolder()
+        {
+            StatusString.Text = "Du måste välja en bas- och en målmapp";
+        }
+
+        private void UpdateStatusNonExistingFolder()
+        {
+            StatusString.Text = "Du har valt en mapp som inte finns";
         }
     }
 }

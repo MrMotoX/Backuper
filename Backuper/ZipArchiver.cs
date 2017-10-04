@@ -21,16 +21,13 @@ namespace Backuper
 
         public static void CreateBackup()
         {
-            string targetFile = GetTargetFilePath();
-            ZipFile.CreateFromDirectory(baseDirectory, targetFile);
+            ZipFile.CreateFromDirectory(baseDirectory, GetTargetFileName());
         }
 
-        private static string GetTargetFilePath()
+        public static string GetTargetFileName()
         {
-            Directory.SetCurrentDirectory(targetDirectory);
-            string baseDirectoryName = Path.GetDirectoryName(baseDirectory);
-            string filePath = Path.GetDirectoryName(baseDirectory) + @".zip";
-            return filePath;
+            string baseDirectoryName = new DirectoryInfo(baseDirectory).Name;
+            return targetDirectory + @"\" + baseDirectoryName + @".zip";
         }
     }
 }
