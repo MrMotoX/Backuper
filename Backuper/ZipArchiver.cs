@@ -6,6 +6,8 @@ namespace Backuper
 {
     static class ZipArchiver
     {
+        public static event EventHandler<DirectoryUpdatedEventArgs> OnDirectoryUpdated;
+
         private static string baseDirectory;
         private static string targetDirectory;
 
@@ -50,13 +52,6 @@ namespace Backuper
             string baseDirectoryName = new DirectoryInfo(baseDirectory).Name;
             return targetDirectory + @"\" + baseDirectoryName + @".zip";
         }
-
-        public static event EventHandler<DirectoryUpdatedEventArgs> OnDirectoryUpdated;
-
-        //private static void OnDirectoryUpdated(DirectoryUpdatedEventArgs e)
-        //{
-        //    BaseDirectoryUpdated?.Invoke(null, e);
-        //}
     }
 
     public class DirectoryUpdatedEventArgs : EventArgs
