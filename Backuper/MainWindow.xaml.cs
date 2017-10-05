@@ -16,7 +16,7 @@ namespace Backuper
         {
             InitializeComponent();
 
-            ZipArchiver.OnDirectoryUpdated += ZipArchiver_BaseDirectoryUpdated;
+            //ZipArchiver.OnDirectoryUpdated += ZipArchiver_BaseDirectoryUpdated;
             ZipArchiver.LoadConfig();
 
             this.folderBrowserDialog1 = new FolderBrowserDialog()
@@ -26,15 +26,15 @@ namespace Backuper
             };
         }
 
-        private void ZipArchiver_BaseDirectoryUpdated(object sender, DirectoryUpdatedEventArgs e)
-        {
-            if (e.Directory == "Base")
-            {
-                ConfigXml.SaveToFieldInFile("BaseDirectory", e.Path);
-                BaseDirectoryString.Text = e.Path;
-                StatusString.Text = "Basmapp vald";
-            }
-        }
+        //private void ZipArchiver_BaseDirectoryUpdated(object sender, DirectorySetEventArgs e)
+        //{
+        //    if (e.Directory == "Base")
+        //    {
+        //        ConfigXml.SaveToFieldInFile("BaseDirectory", e.Path);
+        //        BaseDirectoryString.Text = e.Path;
+        //        StatusString.Text = "Basmapp vald";
+        //    }
+        //}
 
         private void PickDirectoryButton_Click(object sender, RoutedEventArgs e)
         {

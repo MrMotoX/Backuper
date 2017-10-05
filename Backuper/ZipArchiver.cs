@@ -6,10 +6,12 @@ namespace Backuper
 {
     static class ZipArchiver
     {
-        public static event EventHandler<DirectoryUpdatedEventArgs> OnDirectoryUpdated;
+        //public static event EventHandler<DirectorySetEventArgs> OnDirectoryUpdated;
 
         private static string baseDirectory;
         private static string targetDirectory;
+        private static Directory baseDir;
+        private static Directory targetDir;
 
         public static void LoadConfig()
         {
@@ -25,10 +27,11 @@ namespace Backuper
             }
         }
 
-        public static void SetBaseDirectory(string folder)
+        public static void SetBaseDirectory(string path)
         {
-            baseDirectory = folder;
-            OnDirectoryUpdated?.Invoke(null, new DirectoryUpdatedEventArgs("Base", folder));
+            baseDir = new Directory(path);
+            //baseDirectory = folder;
+            //OnDirectoryUpdated?.Invoke(null, new DirectorySetEventArgs("Base", path));
         }
 
         public static string GetBaseDirectory()
@@ -39,7 +42,7 @@ namespace Backuper
         public static void SetTargetDirectory(string folder)
         {
             targetDirectory = folder;
-            OnDirectoryUpdated?.Invoke(null, new DirectoryUpdatedEventArgs("Target", folder));
+            OnDirectoryUpdated?.Invoke(null, new DirectorySetEventArgs("Target", folder));
         }
 
         public static void CreateBackup()
@@ -54,15 +57,15 @@ namespace Backuper
         }
     }
 
-    public class DirectoryUpdatedEventArgs : EventArgs
-    {
-        public string Directory;
-        public string Path;
+    //public class DirectoryUpdatedEventArgs : EventArgs
+    //{
+    //    public string Directory;
+    //    public string Path;
 
-        public DirectoryUpdatedEventArgs(string directory, string path)
-        {
-            Directory = directory;
-            Path = path;
-        }
-    }
+    //    public DirectoryUpdatedEventArgs(string directory, string path)
+    //    {
+    //        Directory = trait;
+    //        Path = path;
+    //    }
+    //}
 }
