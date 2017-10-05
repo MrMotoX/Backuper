@@ -11,13 +11,22 @@ namespace Backuper
     public partial class MainWindow : Window
     {
         private FolderBrowserDialog folderBrowserDialog1;
-        
+        private Directory baseDir;
+        private File targetFile;
+        //private Directory targetDir;
+
         public MainWindow()
         {
             InitializeComponent();
+            
+            Directory.OnPathSet += Directory_PathSet;
 
-            //ZipArchiver.OnDirectoryUpdated += ZipArchiver_BaseDirectoryUpdated;
-            ZipArchiver.LoadConfig();
+            ConfigXml.LoadFromFile();
+            baseDir = new Directory("Base");
+            targetFile = new File(baseDir.GetName());
+            //targetDir = new Directory("Target");
+
+            //ZipArchiver.LoadConfig();
 
             this.folderBrowserDialog1 = new FolderBrowserDialog()
             {
@@ -26,15 +35,14 @@ namespace Backuper
             };
         }
 
-        //private void ZipArchiver_BaseDirectoryUpdated(object sender, DirectorySetEventArgs e)
-        //{
-        //    if (e.Directory == "Base")
-        //    {
-        //        ConfigXml.SaveToFieldInFile("BaseDirectory", e.Path);
-        //        BaseDirectoryString.Text = e.Path;
-        //        StatusString.Text = "Basmapp vald";
-        //    }
-        //}
+        private void Directory_PathSet(object sender, DirectoryPathSetEventArgs e)
+        {
+            if (e.Trait == "Base")
+            {
+                BaseDirectoryString.Text = e.Path;
+                StatusString.Text = "Basmapp vald";
+            }
+        }
 
         private void PickDirectoryButton_Click(object sender, RoutedEventArgs e)
         {
@@ -42,11 +50,13 @@ namespace Backuper
             if (tag == "base")
             {
                 folderBrowserDialog1.Description = "Välj den mapp du vill komprimera.";
-                folderBrowserDialog1.SelectedPath = GetBaseDirectoryPath();
+                //folderBrowserDialog1.SelectedPath = GetBaseDirectoryPath();
+                folderBrowserDialog1.SelectedPath = baseDir.GetPath();
             }
             else if (tag == "target")
             {
                 folderBrowserDialog1.Description = "Välj den mapp du vill skapa den komprimerade filen i.";
+                folderBrowserDialog1.SelectedPath = targetFile.GetPath();
             }
 
             DialogResult result = folderBrowserDialog1.ShowDialog();
@@ -55,13 +65,13 @@ namespace Backuper
             {
                 if (tag == "base")
                 {
-                    ZipArchiver.SetBaseDirectory(folderBrowserDialog1.SelectedPath);
-                    //BaseDirectoryString.Text = folderBrowserDialog1.SelectedPath;
-                    //StatusString.Text = "Basmapp vald";
+                    baseDir.SetPath(folderBrowserDialog1.SelectedPath);
+                    //ZipArchiver.SetBaseDirectory(folderBrowserDialog1.SelectedPath);
                 }
                 else if (tag == "target")
                 {
-                    ZipArchiver.SetTargetDirectory(folderBrowserDialog1.SelectedPath);
+                    targetFile.SetPath(folderBrowserDialog1.SelectedPath);
+                    //ZipArchiver.SetTargetDirectory(folderBrowserDialog1.SelectedPath);
                     try
                     {
                         TargetDirectoryString.Text = ZipArchiver.GetTargetFileName();
@@ -75,22 +85,22 @@ namespace Backuper
             }
         }
 
-        private string GetBaseDirectoryPath()
-        {
-            string directoryPath = ConfigXml.GetField("BaseDirectory");
-            if (directoryPath == "")
-            {
-                directoryPath = ZipArchiver.GetBaseDirectory();
-            }
-            return directoryPath;
-        }
+        //private string GetBaseDirectoryPath()
+        //{
+        //    string directoryPath = ConfigXml.GetField("BaseDirectory");
+        //    if (directoryPath == "")
+        //    {
+        //        directoryPath = ZipArchiver.GetBaseDirectory();
+        //    }
+        //    return directoryPath;
+        //}
 
         private void CreateZipButton_Click(object sender, RoutedEventArgs e)
         {
             UpdateStatusCreatingArchive();
             try
             {
-                ZipArchiver.CreateBackup();
+                ZipArchiver.CreateBackup(baseDir.GetPath(), targetFile.GetFilePath());
                 UpdateStatusArchiveCreated();
             }
             catch (ArgumentNullException)

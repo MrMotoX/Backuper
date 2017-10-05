@@ -1,5 +1,5 @@
 ﻿using System;
-using System.IO;
+using IO = System.IO;
 using System.Xml;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +15,7 @@ namespace Backuper
 
         public static void LoadFromFile()
         {
-            if (File.Exists(fileName))
+            if (IO.File.Exists(fileName))
             {
                 doc.Load(fileName);
             }
