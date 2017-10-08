@@ -24,7 +24,17 @@
 
         public string GetFilePath()
         {
-            return GetPath() + @"\" + this.name + @".zip";
+            return GetFilePathNoExtension() + @".zip";
+        }
+
+        public string GetFilePathWithTimeStamp()
+        {
+            return GetFilePathNoExtension() + Time.GetYearMonthDayHourMinute() + @".zip";
+        }
+
+        private string GetFilePathNoExtension()
+        {
+            return GetPath() + @"\" + this.name;
         }
     }
 }

@@ -74,6 +74,7 @@
     <Compile Include="ConfigXml.cs" />
     <Compile Include="Directory.cs" />
     <Compile Include="File.cs" />
+    <Compile Include="Time.cs" />
     <Compile Include="ZipArchiver.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

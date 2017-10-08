@@ -103,7 +103,7 @@ namespace Backuper
             UpdateStatusCreatingArchive();
             try
             {
-                ZipArchiver.CreateBackup(baseDir.GetPath(), targetFile.GetFilePath());
+                ZipArchiver.CreateBackup(baseDir.GetPath(), targetFile.GetFilePathWithTimeStamp());
                 UpdateStatusArchiveCreated();
             }
             catch (ArgumentNullException)
