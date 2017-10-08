@@ -8,29 +8,42 @@ namespace Backuper
     {
         private static string baseDirectory;
         private static string targetDirectory;
+        //private static Directory baseDir;
+        //private static Directory targetDir;
 
-        public static void SetBaseDirectory(string folder)
+        //public static void LoadConfig()
+        //{
+        //    ConfigXml.LoadFromFile();
+
+        //    baseDir = new Directory("Base");
+        //    targetDir = new Directory("Target");
+        //}
+
+        //public static void SetBaseDirectory(string path)
+        //{
+        //    baseDir = new Directory(path);
+        //}
+
+        //public static string GetBaseDirectory()
+        //{
+        //    return baseDirectory;
+        //}
+
+        //public static void SetTargetDirectory(string folder)
+        //{
+        //    targetDirectory = folder;
+        //    OnDirectoryUpdated?.Invoke(null, new DirectoryPathSetEventArgs("Target", folder));
+        //}
+
+        public static void CreateBackup(string baseDirPath, string targetFilePath)
         {
-            baseDirectory = folder;
+            ZipFile.CreateFromDirectory(baseDirPath, targetFilePath);
         }
 
-        public static void SetTargetDirectory(string folder)
+        public static string GetTargetFileName()
         {
-            targetDirectory = folder;
-        }
-
-        public static void CreateBackup()
-        {
-            string targetFile = GetTargetFilePath();
-            ZipFile.CreateFromDirectory(baseDirectory, targetFile);
-        }
-
-        private static string GetTargetFilePath()
-        {
-            Directory.SetCurrentDirectory(targetDirectory);
-            string baseDirectoryName = Path.GetDirectoryName(baseDirectory);
-            string filePath = Path.GetDirectoryName(baseDirectory) + @".zip";
-            return filePath;
+            string baseDirectoryName = new DirectoryInfo(baseDirectory).Name;
+            return targetDirectory + @"\" + baseDirectoryName + @".zip";
         }
     }
 }
