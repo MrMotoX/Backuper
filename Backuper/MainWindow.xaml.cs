@@ -13,7 +13,6 @@ namespace Backuper
         private FolderBrowserDialog folderBrowserDialog1;
         private Directory baseDir;
         private File targetFile;
-        //private Directory targetDir;
 
         public MainWindow()
         {
@@ -27,9 +26,6 @@ namespace Backuper
             {
                 targetFile = new File(baseDir.GetName());
             }
-            //targetDir = new Directory("Target");
-
-            //ZipArchiver.LoadConfig();
 
             this.folderBrowserDialog1 = new FolderBrowserDialog()
             {
@@ -53,7 +49,6 @@ namespace Backuper
             if (tag == "base")
             {
                 folderBrowserDialog1.Description = "Välj den mapp du vill komprimera.";
-                //folderBrowserDialog1.SelectedPath = GetBaseDirectoryPath();
                 folderBrowserDialog1.SelectedPath = baseDir.GetPath();
             }
             else if (tag == "target")
@@ -77,15 +72,12 @@ namespace Backuper
                     {
                         targetFile.SetName(baseDir.GetName());
                     }
-                    //ZipArchiver.SetBaseDirectory(folderBrowserDialog1.SelectedPath);
                 }
                 else if (tag == "target")
                 {
                     targetFile.SetPath(folderBrowserDialog1.SelectedPath);
-                    //ZipArchiver.SetTargetDirectory(folderBrowserDialog1.SelectedPath);
                     try
                     {
-                        //TargetDirectoryString.Text = ZipArchiver.GetTargetFileName();
                         TargetDirectoryString.Text = targetFile.GetFilePath();
                         StatusString.Text = "Målmapp vald";
                     }
@@ -96,16 +88,6 @@ namespace Backuper
                 }
             }
         }
-
-        //private string GetBaseDirectoryPath()
-        //{
-        //    string directoryPath = ConfigXml.GetField("BaseDirectory");
-        //    if (directoryPath == "")
-        //    {
-        //        directoryPath = ZipArchiver.GetBaseDirectory();
-        //    }
-        //    return directoryPath;
-        //}
 
         private void CreateZipButton_Click(object sender, RoutedEventArgs e)
         {

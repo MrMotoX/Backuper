@@ -51,9 +51,6 @@ namespace Backuper
             {
                 XmlElement targetElement = doc.CreateElement(field);
                 targetElement.InnerText = value;
-                //XmlNode newNode = doc.CreateNode("element", field, "");
-                //newNode.InnerText = value;
-                //doc.AppendChild(newNode);
                 doc.DocumentElement.AppendChild(targetElement);
             }
             doc.Save(fileName);
