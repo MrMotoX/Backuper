@@ -19,6 +19,13 @@ namespace Backuper
             {
                 doc.Load(fileName);
             }
+            else
+            {
+                doc.LoadXml("<?xml version='1.0' ?>" +
+                "<Directories>" +
+                "</Directories>");
+                doc.Save(fileName);
+            }
         }
 
         public static string GetField(string field)
@@ -38,13 +45,16 @@ namespace Backuper
             {
                 XmlNode newNode = nodes[0];
                 newNode.InnerText = value;
-                doc.ReplaceChild(newNode, nodes[0]);
+                doc.DocumentElement.ReplaceChild(newNode, nodes[0]);
             }
             else
             {
-                XmlNode newNode = doc.CreateNode("element", field, "");
-                newNode.InnerText = value;
-                doc.AppendChild(newNode);
+                XmlElement targetElement = doc.CreateElement(field);
+                targetElement.InnerText = value;
+                //XmlNode newNode = doc.CreateNode("element", field, "");
+                //newNode.InnerText = value;
+                //doc.AppendChild(newNode);
+                doc.DocumentElement.AppendChild(targetElement);
             }
             doc.Save(fileName);
         }

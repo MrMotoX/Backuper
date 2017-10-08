@@ -23,7 +23,10 @@ namespace Backuper
 
             ConfigXml.LoadFromFile();
             baseDir = new Directory("Base");
-            targetFile = new File(baseDir.GetName());
+            if (baseDir.GetName() != "")
+            {
+                targetFile = new File(baseDir.GetName());
+            }
             //targetDir = new Directory("Target");
 
             //ZipArchiver.LoadConfig();
@@ -66,6 +69,14 @@ namespace Backuper
                 if (tag == "base")
                 {
                     baseDir.SetPath(folderBrowserDialog1.SelectedPath);
+                    if (targetFile == null)
+                    {
+                        targetFile = new File(baseDir.GetName());
+                    }
+                    else
+                    {
+                        targetFile.SetName(baseDir.GetName());
+                    }
                     //ZipArchiver.SetBaseDirectory(folderBrowserDialog1.SelectedPath);
                 }
                 else if (tag == "target")
@@ -74,7 +85,8 @@ namespace Backuper
                     //ZipArchiver.SetTargetDirectory(folderBrowserDialog1.SelectedPath);
                     try
                     {
-                        TargetDirectoryString.Text = ZipArchiver.GetTargetFileName();
+                        //TargetDirectoryString.Text = ZipArchiver.GetTargetFileName();
+                        TargetDirectoryString.Text = targetFile.GetFilePath();
                         StatusString.Text = "Målmapp vald";
                     }
                     catch (ArgumentNullException)

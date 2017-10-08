@@ -6,8 +6,8 @@ namespace Backuper
 {
     static class ZipArchiver
     {
-        private static string baseDirectory;
-        private static string targetDirectory;
+        //private static string baseDirectory;
+        //private static string targetDirectory;
         //private static Directory baseDir;
         //private static Directory targetDir;
 
@@ -40,10 +40,10 @@ namespace Backuper
             ZipFile.CreateFromDirectory(baseDirPath, targetFilePath);
         }
 
-        public static string GetTargetFileName()
-        {
-            string baseDirectoryName = new DirectoryInfo(baseDirectory).Name;
-            return targetDirectory + @"\" + baseDirectoryName + @".zip";
-        }
+        //public static string GetTargetFileName()
+        //{
+        //    string baseDirectoryName = new DirectoryInfo(baseDirectory).Name;
+        //    return targetDirectory + @"\" + baseDirectoryName + @".zip";
+        //}
     }
 }

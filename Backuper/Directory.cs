@@ -52,7 +52,11 @@ namespace Backuper
 
         public string GetName()
         {
-            string name = new DirectoryInfo(this.path).Name;
+            string name = "";
+            if (this.path != null)
+            {
+                name = new DirectoryInfo(this.path).Name;
+            }
             return name;
         }
 
