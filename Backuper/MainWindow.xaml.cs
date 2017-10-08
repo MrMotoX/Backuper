@@ -25,6 +25,10 @@ namespace Backuper
             if (baseDir.GetName() != "")
             {
                 targetFile = new File(baseDir.GetName());
+                if (targetFile.GetPath() != null)
+                {
+                    UpdateTargetFilePathText();
+                }
             }
 
             this.folderBrowserDialog1 = new FolderBrowserDialog()
@@ -76,16 +80,21 @@ namespace Backuper
                 else if (tag == "target")
                 {
                     targetFile.SetPath(folderBrowserDialog1.SelectedPath);
-                    try
-                    {
-                        TargetDirectoryString.Text = targetFile.GetFilePath();
-                        StatusString.Text = "Målmapp vald";
-                    }
-                    catch (ArgumentNullException)
-                    {
-                        UpdateStatusPickFolder();
-                    }
+                    UpdateTargetFilePathText();
                 }
+            }
+        }
+
+        private void UpdateTargetFilePathText()
+        {
+            try
+            {
+                TargetDirectoryString.Text = targetFile.GetFilePath();
+                StatusString.Text = "Målmapp vald";
+            }
+            catch (ArgumentNullException)
+            {
+                UpdateStatusPickFolder();
             }
         }
 
