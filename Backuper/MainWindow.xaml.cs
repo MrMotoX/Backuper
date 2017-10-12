@@ -100,11 +100,17 @@ namespace Backuper
 
         private void CreateZipButton_Click(object sender, RoutedEventArgs e)
         {
-            UpdateStatusCreatingArchive();
+            if (System.IO.File.Exists(targetFile.GetFilePathWithTimeStamp()))
+            {
+                StatusString.Text = "Fil finns redan";
+                return;
+            }
+
+            StatusString.Text = "Skapar zip-fil";
             try
             {
                 ZipArchiver.CreateBackup(baseDir.GetPath(), targetFile.GetFilePathWithTimeStamp());
-                UpdateStatusArchiveCreated();
+                StatusString.Text = "Zip-fil skapades";
             }
             catch (ArgumentNullException)
             {
@@ -112,28 +118,13 @@ namespace Backuper
             }
             catch (DirectoryNotFoundException)
             {
-                UpdateStatusNonExistingFolder();
+                StatusString.Text = "Du har valt en mapp som inte finns";
             }
-        }
-
-        private void UpdateStatusCreatingArchive()
-        {
-            StatusString.Text = "Skapar zip-fil";
-        }
-
-        private void UpdateStatusArchiveCreated()
-        {
-            StatusString.Text = "Zip-fil skapades";
         }
 
         private void UpdateStatusPickFolder()
         {
             StatusString.Text = "Du måste välja en bas- och en målmapp";
-        }
-
-        private void UpdateStatusNonExistingFolder()
-        {
-            StatusString.Text = "Du har valt en mapp som inte finns";
         }
     }
 }
