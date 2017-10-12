@@ -51,6 +51,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.IO.Compression" />
     <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
@@ -71,11 +72,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="BasicProgress.cs" />
     <Compile Include="ConfigXml.cs" />
     <Compile Include="Directory.cs" />
-    <Compile Include="File.cs" />
+    <Compile Include="StreamWithProgress.cs" />
+    <Compile Include="TargetFile.cs" />
     <Compile Include="Time.cs" />
     <Compile Include="ZipArchiver.cs" />
+    <Compile Include="ZipFileWithProgress.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

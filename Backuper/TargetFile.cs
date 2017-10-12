@@ -1,17 +1,17 @@
 ﻿namespace Backuper
 {
-    class File : Directory
+    class TargetFile : Directory
     {
         private string name;
         private string filePath;
 
-        public File(string name)
+        public TargetFile(string name)
             : base("Target")
         {
             SetName(name);
         }
 
-        public File(string name, string dirPath)
+        public TargetFile(string name, string dirPath)
             : base("Target", dirPath)
         {
             SetName(name);

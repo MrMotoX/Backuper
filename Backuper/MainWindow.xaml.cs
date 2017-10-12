@@ -12,7 +12,7 @@ namespace Backuper
     {
         private FolderBrowserDialog folderBrowserDialog1;
         private Directory baseDir;
-        private File targetFile;
+        private TargetFile targetFile;
 
         public MainWindow()
         {
@@ -24,7 +24,7 @@ namespace Backuper
             baseDir = new Directory("Base");
             if (baseDir.GetName() != "")
             {
-                targetFile = new File(baseDir.GetName());
+                targetFile = new TargetFile(baseDir.GetName());
                 if (targetFile.GetPath() != null)
                 {
                     UpdateTargetFilePathText();
@@ -70,7 +70,7 @@ namespace Backuper
                     baseDir.SetPath(folderBrowserDialog1.SelectedPath);
                     if (targetFile == null)
                     {
-                        targetFile = new File(baseDir.GetName());
+                        targetFile = new TargetFile(baseDir.GetName());
                     }
                     else
                     {
@@ -100,16 +100,18 @@ namespace Backuper
 
         private void CreateZipButton_Click(object sender, RoutedEventArgs e)
         {
-            if (System.IO.File.Exists(targetFile.GetFilePathWithTimeStamp()))
+            if (File.Exists(targetFile.GetFilePathWithTimeStamp()))
             {
                 StatusString.Text = "Fil finns redan";
                 return;
             }
 
-            StatusString.Text = "Skapar zip-fil";
+            //StatusString.Text = "Skapar zip-fil";
             try
             {
-                ZipArchiver.CreateBackup(baseDir.GetPath(), targetFile.GetFilePathWithTimeStamp());
+                //ZipArchiver.CreateBackup(baseDir.GetPath(), targetFile.GetFilePathWithTimeStamp());
+                ZipFileWithProgress.CreateFromDirectory(baseDir.GetPath(), targetFile.GetFilePathWithTimeStamp(),
+                new BasicProgress<double>(p => StatusString.Text = $"{p:P2} av zip-filen är färdig"));
                 StatusString.Text = "Zip-fil skapades";
             }
             catch (ArgumentNullException)
@@ -125,6 +127,21 @@ namespace Backuper
         private void UpdateStatusPickFolder()
         {
             StatusString.Text = "Du måste välja en bas- och en målmapp";
+        }
+
+        private void NewZipFunction(string[] args)
+        {
+            string sourceDirectory = args[0],
+            archive = args[1],
+            archiveDirectory = Path.GetDirectoryName(Path.GetFullPath(archive)),
+            unpackDirectoryName = Guid.NewGuid().ToString();
+
+            File.Delete(archive);
+            ZipFileWithProgress.CreateFromDirectory(sourceDirectory, archive,
+                new BasicProgress<double>(p => Console.WriteLine($"{p:P2} archiving complete")));
+
+            ZipFileWithProgress.ExtractToDirectory(archive, unpackDirectoryName,
+                new BasicProgress<double>(p => Console.WriteLine($"{p:P0} extracting complete")));
         }
     }
 }
